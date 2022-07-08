@@ -11,7 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
 
@@ -31,13 +33,6 @@ public class Perfil implements Serializable {
 	private String Obserbacion;
 	private Integer Status;
 
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="id_perfil", cascade=CascadeType.ALL)
-	private List<Usuario> usuario;
-
-	public Perfil() {
-		this.usuario =new ArrayList<>();
-	}
-		
 	@Column(name="id_perfil")
 	public Long getId_Perfil(){
 		return Id_Perfil;
@@ -87,12 +82,4 @@ public class Perfil implements Serializable {
 	public void setStatus(Integer status) {
 		Status = status;
 	}
-	public List<Usuario> getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(List<Usuario> usuario) {
-		this.usuario = usuario;
-	}
-
 }

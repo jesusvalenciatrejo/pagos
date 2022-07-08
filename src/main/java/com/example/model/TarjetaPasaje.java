@@ -2,10 +2,15 @@ package com.example.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
 
@@ -15,10 +20,10 @@ import lombok.Data;
 public class TarjetaPasaje implements Serializable {
 	
 	private static final long serialVersionUID = 3908715067053866349L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id_TarjetaPasaje;
-	private Long Id_Usuario;
 	private String Creditos;
 	private Integer Numero_de_Tarjeta;
 	private Date Fecha_Creacion;
@@ -26,17 +31,15 @@ public class TarjetaPasaje implements Serializable {
 	private String Obserbacion;
 	private Integer Status;
 	
+	@OneToMany(targetEntity = Boletos.class, cascade={CascadeType.REMOVE, CascadeType.PERSIST })
+	@JoinColumn(name="id_TarjetaPasaje")
+	public List<Boletos>Boletos;
+
 	public Long getId_TarjetaPasaje() {
 		return Id_TarjetaPasaje;
 	}
 	public void setId_TarjetaPasaje(Long id_TarjetaPasaje) {
 		Id_TarjetaPasaje = id_TarjetaPasaje;
-	}
-	public Long getId_Usuario() {
-		return Id_Usuario;
-	}
-	public void setId_Usuario(Long id_Usuario) {
-		Id_Usuario = id_Usuario;
 	}
 	public String getCreditos() {
 		return Creditos;

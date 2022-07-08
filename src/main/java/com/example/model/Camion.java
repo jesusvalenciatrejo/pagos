@@ -1,12 +1,16 @@
 package com.example.model;
-
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -16,13 +20,11 @@ import lombok.Data;
 @Table(name="tbl_Camion")
 public class Camion implements Serializable {
 
-	
 	private static final long serialVersionUID = -5345815139838407394L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id_Camion;
-	private Long Id_Boleto;
-	private Long Id_TipoTranporte;
 	private String Modelo;
 	private String Placas;
 	private String Marcas;
@@ -34,23 +36,22 @@ public class Camion implements Serializable {
 	private String Obserbacion;
 	private Integer Status;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_Boletos", referencedColumnName = "id_Boletos")
+	public Boletos boletos;
+	
+	@OneToMany(targetEntity = Reparacion.class, cascade={CascadeType.REMOVE, CascadeType.PERSIST })
+	@JoinColumn(name="id_Camion")
+	public List<Reparacion>Reparacion;
+
+	@OneToMany(targetEntity = Tiempo.class, cascade={CascadeType.REMOVE, CascadeType.PERSIST })
+	@JoinColumn(name="id_camion")
+	public List<Tiempo>tiempo;
 	public Long getId_Camion() {
 		return Id_Camion;
 	}
 	public void setId_Camion(Long id_Camion) {
 		Id_Camion = id_Camion;
-	}
-	public Long getId_Boleto() {
-		return Id_Boleto;
-	}
-	public void setId_Boleto(Long id_Boleto) {
-		Id_Boleto = id_Boleto;
-	}
-	public Long getId_TipoTranporte() {
-		return Id_TipoTranporte;
-	}
-	public void setId_TipoTranporte(Long id_TipoTranporte) {
-		Id_TipoTranporte = id_TipoTranporte;
 	}
 	public String getModelo() {
 		return Modelo;

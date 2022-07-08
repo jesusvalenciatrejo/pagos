@@ -3,10 +3,13 @@ package com.example.model;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -19,19 +22,24 @@ public class Educacion implements Serializable {
 	private static final long serialVersionUID = 1340348447141644600L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private Long Id_Educacion;
-	private Long Id_Tipo_Universidad;
-	private Long Id_Carrera;
-	private Long Id_Usuario;
-	private String Semestre;
+    private String Semestre;
 	private Date Fecha_Entrada;
 	private Date Fecha_Salida;
 	private Date Fecha_Creacion;
 	private Date Fecha_Modificacion;
 	private String Obserbacion;
 	private Integer Status;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_TipoUniversidad", referencedColumnName = "id_TipoUniversidad")
+	public TipoUniversidad tipouniversidad;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_Carrera", referencedColumnName = "id_Carrera")
+	public Carrera carrera;
+
+	
 	public Long getId_Educacion() {
 		return Id_Educacion;
 	}
@@ -39,31 +47,6 @@ public class Educacion implements Serializable {
 	public void setId_Educacion(Long id_Educacion) {
 		Id_Educacion = id_Educacion;
 	}
-
-	public Long getId_Tipo_Universidad() {
-		return Id_Tipo_Universidad;
-	}
-
-	public void setId_Tipo_Universidad(Long id_Tipo_Universidad) {
-		Id_Tipo_Universidad = id_Tipo_Universidad;
-	}
-
-	public Long getId_Carrera() {
-		return Id_Carrera;
-	}
-
-	public void setId_Carrera(Long id_Carrera) {
-		Id_Carrera = id_Carrera;
-	}
-
-	public Long getId_Usuario() {
-		return Id_Usuario;
-	}
-
-	public void setId_Usuario(Long id_Usuario) {
-		Id_Usuario = id_Usuario;
-	}
-
 	public String getSemestre() {
 		return Semestre;
 	}
