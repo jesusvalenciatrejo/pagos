@@ -1,12 +1,19 @@
 package com.example.model;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
 
@@ -20,8 +27,6 @@ public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id_Usuario;
-	@ManyToOne(fetch=FetchType.LAZY)
-    private Perfil id_perfil;
 	private String Nombre;
 	private String Apellido;
 	private Integer Telefono;
@@ -34,6 +39,21 @@ public class Usuario implements Serializable {
 	private Date Fecha_Modificacion;
 	private String Obserbacion;
 	private Integer Status;
+	
+	
+	@OneToMany(targetEntity = TarjetaPasaje.class, cascade={CascadeType.REMOVE, CascadeType.PERSIST})
+	@JoinColumn(name="id_usuario")
+	public List<TarjetaPasaje>TarjetaPasaje;
+	
+	//y cuando se trata de uno a muchos se le pone list
+	@OneToMany(targetEntity = Educacion.class, cascade={CascadeType.REMOVE, CascadeType.PERSIST})
+	@JoinColumn(name="id_usuario")
+	public List<Educacion>Educacion;
+	
+	//cuando es de uno a uno sele pone el objeto
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_perfil", referencedColumnName = "id_perfil")
+	public Perfil perfil;
 	
 	public Long getId_Usuario() {
 		return Id_Usuario;

@@ -2,11 +2,15 @@ package com.example.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -25,6 +29,12 @@ public class TipoTranporte implements Serializable {
 	private Date Fecha_Modificacion;
 	private String Obserbacion;
 	private Integer Status;
+
+	@OneToMany(targetEntity = Camion.class, cascade={CascadeType.REMOVE, CascadeType.PERSIST})
+    @JoinColumn(name="id_tipotranporte")
+	public List<Camion> camion;
+		
+	
 	
 	public Long getId_TipoTranporte() {
 		return Id_TipoTranporte;

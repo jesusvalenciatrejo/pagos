@@ -1,12 +1,19 @@
 package com.example.model;
-
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -20,7 +27,6 @@ public class Boletos implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id_Boletos;
-	private Long Id_Usuario;
 	private String Precio_Pasaje;
 	private String Rutas;
 	private Date CaducidadBoletoInicial;
@@ -29,18 +35,13 @@ public class Boletos implements Serializable {
 	private Date Fecha_Modificacion;
 	private String Obserbacion;
 	private Integer Status;
+
 	
 	public Long getId_Boletos() {
 		return Id_Boletos;
 	}
 	public void setId_Boletos(Long id_Boletos) {
 		Id_Boletos = id_Boletos;
-	}
-	public Long getId_Usuario() {
-		return Id_Usuario;
-	}
-	public void setId_Usuario(Long id_Usuario) {
-		Id_Usuario = id_Usuario;
 	}
 	public String getPrecio_Pasaje() {
 		return Precio_Pasaje;

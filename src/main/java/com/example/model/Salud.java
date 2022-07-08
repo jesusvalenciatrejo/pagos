@@ -3,10 +3,13 @@ package com.example.model;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -21,7 +24,6 @@ public class Salud implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id_Salud;
-	private Long Id_Usuario;
 	private String Tipo_Salud;
 	private String Tipo_Sangre; 
 	private String Detalles_de_salud;
@@ -30,18 +32,16 @@ public class Salud implements Serializable {
 	private Date Fecha_Modificacion;
 	private String Obserbacion;
 	private Integer Status;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_Usuario", referencedColumnName = "id_Usuario")
+	public Usuario usuario;
 	
 	public Long getId_Salud() {
 		return Id_Salud;
 	}
 	public void setId_Salud(Long id_Salud) {
 		Id_Salud = id_Salud;
-	}
-	public Long getId_Usuario() {
-		return Id_Usuario;
-	}
-	public void setId_Usuario(Long id_Usuario) {
-		Id_Usuario = id_Usuario;
 	}
 	public String getTipo_Salud() {
 		return Tipo_Salud;
